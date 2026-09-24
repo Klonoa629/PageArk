@@ -3,6 +3,7 @@
 /local.properties
 /.idea
 /.hvigor
+/build
 .cxx
 /.clangd
 /.clang-format

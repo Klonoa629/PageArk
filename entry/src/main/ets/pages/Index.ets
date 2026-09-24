@@ -752,9 +752,8 @@ struct Index {
                 Column({ space: 14 }) {
                   Text('书架还是空的').fontSize(this.fs(16))
                     .fontColor(paletteOf(this.themeIdx).sub)
-                  Button(this.importing ? '导入中…' : '导入测试书')
-                    .enabled(!this.importing)
-                    .onClick(() => this.importDemo())
+                  Button('导入书籍')
+                    .onClick(() => this.switchTab(1))
                 }
                 .layoutWeight(1)
                 .width('100%')
