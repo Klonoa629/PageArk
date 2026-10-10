@@ -860,6 +860,9 @@ struct ReaderPage {
   // 跳页：纯数字 + 1~pageCount 才合法；非法时保留已输入内容，弹「非法页码」确认框
   private doJump(): void {
     const t: string = this.jumpText.trim();
+    if (t === '') {
+      return;   // 空输入直接忽略，不弹非法页码提示
+    }
     const n: number = parseInt(t, 10);
     if (/^[0-9]+$/.test(t) && !isNaN(n) && n >= 1 && n <= this.pageCount) {
       this.jumpText = '';
@@ -1272,6 +1275,7 @@ struct ReaderPage {
             .opacity(this.jumpBadOp)
             .animation({ duration: 200 })
             .onClick(() => this.closeJumpBad())
+            .zIndex(40)   // 弹窗层必须压过 Block 触摸盾(z=3)与顶底栏(z=30)，否则点击全被盾拦截
           Column({ space: 14 }) {
             Text('非法页码')
               .fontSize(18).fontWeight(FontWeight.Medium)
@@ -1293,6 +1297,7 @@ struct ReaderPage {
           .opacity(this.jumpBadOp)
           .translate({ y: (1 - this.jumpBadOp) * 24 })
           .animation({ duration: 220, curve: Curve.EaseOut })
+          .zIndex(41)
           .onClick(() => {
           })
         }
@@ -1305,6 +1310,7 @@ struct ReaderPage {
             .opacity(this.tocOp)
             .animation({ duration: 200 })
             .onClick(() => this.closeToc())
+            .zIndex(40)   // 压过 Block 触摸盾(z=3)：遮罩点空白关弹窗、列表上下滑动才收得到手势
           Column({ space: 12 }) {
             Text('目录')
               .fontSize(18).fontWeight(FontWeight.Medium)
@@ -1343,6 +1349,7 @@ struct ReaderPage {
               .width('100%')
               .divider({ strokeWidth: 0.5, color: 'rgba(255,255,255,0.12)' })
               .constraintSize({ maxHeight: this.screenHvp * 0.55 })
+              .scrollBar(BarState.Auto)   // 目录长时显示滚动条提示可滑
             }
           }
           .width('78%')
@@ -1352,6 +1359,7 @@ struct ReaderPage {
           .opacity(this.tocOp)
           .translate({ y: (1 - this.tocOp) * 24 })
           .animation({ duration: 220, curve: Curve.EaseOut })
+          .zIndex(41)
           .onClick(() => {
           })
         }
@@ -1364,6 +1372,7 @@ struct ReaderPage {
             .opacity(this.bmOp)
             .animation({ duration: 200 })
             .onClick(() => this.closeBookmarks())
+            .zIndex(40)   // 同目录/非法页码弹窗：压过 Block 触摸盾(z=3)
           Column({ space: 12 }) {
             Text('书签')
               .fontSize(18).fontWeight(FontWeight.Medium)
@@ -1420,6 +1429,7 @@ struct ReaderPage {
           .opacity(this.bmOp)
           .translate({ y: (1 - this.bmOp) * 24 })
           .animation({ duration: 220, curve: Curve.EaseOut })
+          .zIndex(41)
           .onClick(() => {
           })
         }

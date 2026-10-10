@@ -11,8 +11,9 @@
 **/.test
 /.appanalyzer
 
-# 真机验收截图（hdc snapshot_display 回收的测试残留）
+# 真机验收截图（verify.bat / hdc snapshot_display 回收的测试残留）
 /vtest/
+/verify-shot-*
 
 # rawfile 里的测试书（demo.pdf 超 GitHub 100MB 单文件上限；本地保留不进库，
 # 克隆仓库后如需「导入测试书」请自行放入 entry/src/main/resources/rawfile/）
